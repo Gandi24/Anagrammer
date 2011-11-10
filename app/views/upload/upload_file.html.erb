@@ -1,0 +1,158 @@
+<style>
+
+	body {
+	  min-width: 1200px;      /* 2x LC width + RC width */
+	  font-family: Copperplate Gothic Light, sans-serif;
+	}
+	#container {
+		padding-top: 30px;
+	  padding-left: 400px;   /* LC width */
+	  padding-right: 400px;  /* RC width */
+	}
+	#container .column {
+	  position: relative;
+	  float: left;
+	  text-align: center;
+	}
+	#center {
+	  width: 100%;
+	}
+	#left {
+	  width: 400px;          /* LC width */
+	  right: 400px;          /* LC width */
+	  margin-left: -100%;
+	}
+	#right {
+	  width: 400px;          /* RC width */
+	  margin-right: -400px;  /* RC width */
+	}
+	#header {
+		width: 100%;
+		margin-left: -5px;
+		position: float;
+		margin-top: -10px;
+		height: 100 px;
+		padding: 5px;
+		background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(91%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 91%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 91%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 91%,rgba(0,0,0,0) 100%); /* IE10+ */
+		background: linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 91%,rgba(0,0,0,0) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+	
+	}
+	
+	#footer {
+	  	clear: both;
+		background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.01) 1%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(1%,rgba(0,0,0,0.01)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 1%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 1%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 1%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+		background: linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 1%,rgba(0,0,0,0.65) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		left: -4px;
+		height: 50 px;
+		padding: 10px;
+		font-size: 1em;	
+	}
+	
+	#title {
+		margin-left:auto;
+		margin-right:auto;
+		width: 25%;
+		font-size: 3.5em;
+		padding: 0;
+		margin-top: 8px;
+		margin-bottom: 8px;
+	}
+	
+	#result {
+		text-align: left;
+		padding-bottom: 50px;
+	}
+	
+	/*** IE6 Fix ***/
+	* html #left {
+	  left: 400px;           /* RC width */
+	}
+	
+	p.giant_header {
+		font-size: 4em;
+		font-weight: bold;
+	}
+	
+	p.big_header {
+		font-size: 2em;
+	}
+	
+	a {
+	color: #ddd;
+	}
+
+</style>
+
+<div id="header"><p id="title">ANAGRAMMER</p></div>
+
+<div id="container">
+	<div id="center" class="column">
+
+	<p class="giant_header">2</p>
+	<p class="big_header">Enter your word</p>
+	
+	<%= form_tag("/upload", :multipart=>true) do -%>
+	<p><label for="upload_file">Search for</label> : 
+	<%= text_field 'upload', 'search_word' %></p>
+	<%= submit_tag "Search" %>
+	<% end -%>
+
+</div><div id="left" class="column">
+	
+	
+	<p class="giant_header">1</p>
+	<p class="big_header">Upload the list of words</p>
+
+	<%= form_tag("/upload", :multipart=>true) do -%>
+	<p><label for="upload_file">Select File</label> : 
+	<%= file_field 'upload', 'datafile' %></p>
+	<%= submit_tag "Upload" %>
+	<% end -%>
+	
+	<% if @trie == 0 %>
+	<p>Please, first load the list</p>
+	<% else %>
+	<p>List of words loaded in <%= @delta %> ms</p>
+	<% end %>
+	
+</div><div id="right" class="column">
+
+	<p class="giant_header">3</p>
+	<p class="big_header">Enjoy the result</p>
+
+<div id="result">
+
+	<% if @output_history and @output_history != 0 %>
+		<% for item in @output_history.reverse %>
+			<% for row in item %>
+				<%= row %>
+				<br/>
+			<% end %>
+			<br/>
+		<% end %>
+	<% end %>
+
+</div>
+
+</div></div>
+
+<div id="footer">Made by <a href ="https://cvjwasielak.appspot.com">Jakub Wasielak</a> for Applicake</div>
+
+
+
+
+
+
