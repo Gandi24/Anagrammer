@@ -4,7 +4,8 @@ Anagrammer::Application.routes.draw do
   match '/upload' => 'upload#show', :via => :post
 
   get "home/index"
-
+	match "/" => 'upload#index'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

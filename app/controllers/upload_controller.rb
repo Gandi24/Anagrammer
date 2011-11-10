@@ -16,9 +16,6 @@ class UploadController < ApplicationController
   end
   def create
     list_of_words = []
-	puts "-="*20
-	puts session[:trie]
-	puts "-="*20
 	$index = 0
 	
 	if params[:upload] and params[:upload]["datafile"]
@@ -56,8 +53,8 @@ class UploadController < ApplicationController
 		save_output_history
 	
 	end
-	
-	render 'app/views/upload/upload_file.html.erb', @trie => @trie, @anagrams => @anagrams, @delta => @delta, @output_history => @output_history
+
+	render 'app/views/upload/upload_file.html.erb', @trie => @trie, @delta => @delta, @output_history => @output_history
 
   end
   
