@@ -8,11 +8,11 @@ class UploadController < ApplicationController
 	
   def show
 	@list_of_words = nil
-	render :file => 'app/views/upload/upload_file.html.erb'
+	render :file => File.join('app','views','upload','upload_file.html.erb')
   end
   def index
 	@list_of_words = nil
-	render :file => 'app/views/upload/upload_file.html.erb'
+	render :file => File.join('app','views','upload','upload_file.html.erb')
   end
   def create
     list_of_words = []
@@ -54,7 +54,7 @@ class UploadController < ApplicationController
 	
 	end
 
-	render 'app/views/upload/upload_file.html.erb', @trie => @trie, @delta => @delta, @output_history => @output_history
+	render File.join('app','views','upload','upload_file.html.erb'), @trie => @trie, @delta => @delta, @output_history => @output_history
 
   end
   
