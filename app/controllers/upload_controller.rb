@@ -7,12 +7,12 @@ class UploadController < ApplicationController
   after_filter :save_output_history
 	
   def show
-	@list_of_words = nil
-	render :file => 'app\views\upload\upload_file.html.erb'
+	@list_of_words = nilc
+	render :file => 'app/views/upload/upload_file.html.erb'
   end
   def index
 	@list_of_words = nil
-	render :file => 'app\views\upload\upload_file.html.erb'
+	render :file => 'app/views/upload/upload_file.html.erb'
   end
   def create
     list_of_words = []
